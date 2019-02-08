@@ -41,12 +41,12 @@ if not exist "%officeSetupISO%" (
 
 
 echo.^(^i^) Mounting iso file...
-powershell.exe "Mount-DiskImage ""%~dp0%officeSetupISO%"""
+start /wait /b powershell.exe "Mount-DiskImage ""%~dp0%officeSetupISO%"""
 timeout /nobreak /t 1 >nul
 
 
 
-echo.^(^i^) Running setup...
+echo.^(^i^) Setup...
 for /f "skip=3" %%i in ('powershell.exe "Get-DiskImage """%~dp0%officeSetupISO%""" | Get-Volume | Select-Object {$_.DriveLetter}"') do start /wait %%i:\O16Setup.exe
 :question
 set /p answer=^(^>^) Setup is completed^? ^(y/n^) ^> 
@@ -56,7 +56,7 @@ if "%answer%" NEQ "y" goto :question
 
 
 echo.^(^i^) Unmounting iso file...
-powershell.exe "Dismount-DiskImage ""%~dp0%officeSetupISO%"""
+start /wait /b powershell.exe "Dismount-DiskImage ""%~dp0%officeSetupISO%"""
 timeout /nobreak /t 1 >nul
 
 
@@ -88,6 +88,7 @@ cls
 echo.
 echo.
 echo.    [MikronT] ==^> Office Setup
+echo.                  Release v1.0
 echo.   ==========================================
 echo.     See other here:
 echo.         github.com/MikronT
